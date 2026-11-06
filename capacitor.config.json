@@ -1,0 +1,7 @@
+{
+  "appId": "com.solofit.app",
+  "appName": "SoloFit",
+  "webDir": "www",
+  "backgroundColor": "#0b0307",
+  "android": { "allowMixedContent": false }
+}

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100508">
+<title>Demon Lord | SoloFit</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{--bg:#100508;--pn:rgba(22,7,13,.96);--ln:#78233a;--gl:#ff5366;--tx:#ffe9df;--mu:#c38d91;--gd:#ffc766;--ok:#d6a84f;--rd:#ff3857;--pu:#ba5b92}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:radial-gradient(120% 50% at 50% -10%,#06122a,#000208 65%) fixed;color:var(--tx);font:15px/1.4 "Segoe UI",Roboto,system-ui,sans-serif;padding:env(safe-area-inset-top) 12px calc(78px + env(safe-area-inset-bottom));min-height:100vh}
+main{max-width:520px;margin:12px auto 0}
+.pan{position:relative;background:var(--pn);border:1px solid var(--ln);box-shadow:0 0 10px rgba(27,100,196,.35),inset 0 0 22px rgba(27,100,196,.10);padding:12px 14px;margin:0 0 14px}
+.pan:before,.pan:after{content:"";position:absolute;width:10px;height:10px;border:2px solid var(--gl)}
+.pan:before{top:-3px;left:-3px;border-right:0;border-bottom:0}.pan:after{bottom:-3px;right:-3px;border-left:0;border-top:0}
+.pan h3{margin:0 0 8px;font-size:13px;letter-spacing:.1em;color:var(--gl)}
+.pr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.lv{font-size:28px;font-weight:800;color:var(--gl);text-shadow:0 0 10px var(--gl)}.rk b{color:var(--gd);font-size:20px}.gd{color:var(--gd);font-weight:700}
+.tmr{margin-top:8px;font-size:13px;color:var(--gl);letter-spacing:.04em}.tmr.red{color:var(--rd)}
+.bar{height:8px;background:#02060f;border:1px solid #123a73}.bar i{display:block;height:100%;background:linear-gradient(90deg,#2f8fff,#6fd0ff);box-shadow:0 0 8px var(--gl);transition:width .3s}
+.mu{color:var(--mu)}.sm{font-size:12px}.c{text-align:center}
+.fail{border-color:var(--rd);box-shadow:0 0 14px rgba(255,77,106,.4),inset 0 0 18px rgba(255,77,106,.12);color:#ffc2cc}.fail:before,.fail:after{border-color:var(--rd)}
+.st.good{border-color:var(--ok);color:var(--ok)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.cd{perspective:700px;min-height:178px}
+.cb,.cf{min-height:178px;width:100%;border:1px solid var(--ln);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px;background:var(--pn)}
+.cb{background:repeating-linear-gradient(135deg,#030a1a 0 10px,#050f26 10px 20px);color:var(--gl);font-size:46px;font-family:inherit;cursor:pointer;box-shadow:0 0 12px rgba(27,100,196,.45);text-shadow:0 0 14px var(--gl)}
+.cb small{font-size:13px;color:var(--tx);margin-top:2px;text-shadow:none}
+.cf.r1{border-color:var(--pu);box-shadow:0 0 14px var(--pu)}.cf.r2{border-color:var(--gd);box-shadow:0 0 22px var(--gd)}
+.cf.new{animation:fl .6s}.cf.dn{opacity:.5}
+@keyframes fl{from{transform:rotateY(90deg)}to{transform:none}}
+.fig{width:100%;max-width:130px;height:62px;color:var(--gl)}
+.cf b{font-size:15px}.cf .q{font-size:24px;font-weight:700;line-height:1.15}.cf .rr{font-size:12px;font-weight:700;color:var(--gd)}
+.mini{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;justify-content:center}
+.bt{border:1px solid var(--gl);border-radius:3px;padding:9px 12px;font:inherit;font-size:14px;font-weight:600;background:rgba(111,208,255,.1);color:var(--gl)}
+.bt.g{border-color:var(--ok);color:var(--ok);background:rgba(59,224,160,.12)}.bt.o{padding:6px 8px;font-size:12px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #0f2a52;cursor:pointer}
+.row:last-child{border:0}.row .t{flex:1}
+.box{width:24px;height:24px;border:2px solid var(--mu);display:grid;place-items:center;flex:none}
+.row.on .box{background:var(--ok);border-color:var(--ok);color:#04060d}.row.on .t{text-decoration:line-through;opacity:.5}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid #1b4a8c;background:none;color:var(--tx);padding:7px 11px;font:inherit;font-size:13px}.chip.j{border-color:var(--rd)}
+.chip span{color:var(--gd)}
+input,select{padding:10px;border:1px solid #1b4a8c;background:#02060f;color:var(--tx);font:inherit;min-width:0;flex:1}
+.fl{display:flex;gap:8px;margin-top:8px}
+.big{font-size:48px;line-height:1;color:var(--gl);text-align:center;font-weight:800;text-shadow:0 0 14px var(--gl)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#000208;border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1 0 auto;padding:12px 7px;border:0;background:none;color:var(--mu);font:inherit;font-size:10px}
+nav button.on{color:var(--gl);font-weight:700;text-shadow:0 0 8px var(--gl)}
+#nag{position:fixed;inset:0;background:rgba(2,4,10,.93);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+#nag.show{display:flex}
+.win{width:100%;max-width:380px;background:var(--pn);border:1px solid var(--gl);box-shadow:0 0 30px var(--ln);padding:20px;text-align:center}
+#nag.red .win{border-color:var(--rd);box-shadow:0 0 30px var(--rd)}
+.wt{color:var(--gl);letter-spacing:.2em;font-size:13px;margin-bottom:10px}#nag.red .wt{color:var(--rd)}
+#nag h2{margin:0 0 10px;font-size:24px}#nag p{margin:0 0 18px}
+#nag button{background:none;border:1px solid var(--gl);color:var(--gl);padding:14px 26px;font:inherit;font-size:17px;font-weight:700}
+@media (prefers-reduced-motion:reduce){.cf.new{animation:none}}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(transparent 0 2px,rgba(95,200,255,.03) 2px 3px);z-index:20}
+#qm{position:fixed;inset:0;background:rgba(0,2,8,.93);display:none;align-items:center;justify-content:center;padding:20px;z-index:8}#qm.show{display:flex}
+#qm h2{margin:0 0 6px;font-size:20px}.stp{display:flex;gap:8px;margin:14px 0 4px;align-items:center}.stp input{text-align:center;font-size:28px;font-weight:700}.stp .bt{font-size:26px;width:60px;padding:8px 0}
+#qt2{font-size:20px;font-weight:700;color:var(--gl);margin:12px 0 14px}#qm .fl .bt{flex:1}#qc{justify-content:center;margin-top:10px}
+.chip.sel{border-color:var(--gl);color:var(--gl);background:rgba(95,200,255,.14)}
+body{background:radial-gradient(100% 45% at 50% -8%,#45111d,#100508 65%) fixed}
+nav{overflow-x:auto;background:#100508;border-color:#78233a}
+.pan{box-shadow:0 0 12px rgba(180,35,62,.23),inset 0 0 22px rgba(180,35,62,.08)}
+.pan:before,.pan:after{border-color:#ff5366}
+.bar{background:#0b0306;border-color:#55202c}.bar i{background:linear-gradient(90deg,#a91e3b,#ff8062);box-shadow:0 0 8px #ff5366}
+.cb{background:repeating-linear-gradient(135deg,#17070d 0 10px,#260a14 10px 20px);box-shadow:0 0 12px rgba(180,35,62,.35)}
+input,select{border-color:#78233a;background:#100508}
+.chip{border-color:#6b2638}
+nav button.on{color:#ff8062;text-shadow:0 0 8px #ff5366}
+body:after{background:repeating-linear-gradient(transparent 0 2px,rgba(255,83,102,.025) 2px 3px)}
+.throne{padding:22px 16px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(180,35,62,.28),transparent 72%),var(--pn)}
+.sigil{font-size:48px;line-height:1.2;text-shadow:0 0 20px var(--rd)}
+.throne h1{font-size:24px;letter-spacing:.08em;margin:8px 0;color:var(--gd)}
+.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.statbox{padding:10px;border:1px solid #55202c;background:#100508;text-align:center}
+.statbox b{display:block;color:var(--gd);font-size:22px}
+.history{padding:8px 0;border-bottom:1px solid #32121b}
+.history:last-child{border:0}
+.dayrow{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #32121b}
+main{width:100%;max-width:620px}
+button,summary{touch-action:manipulation}
+.bt,.chip,.cb,nav button{min-height:44px}
+.row{min-height:48px}
+input,select{min-height:44px}
+.fl{flex-wrap:wrap}
+.fl>input,.fl>select{flex:1 1 130px}
+nav{min-height:58px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:1 0 68px;padding:8px 5px;white-space:nowrap}
+.food-search{width:100%;margin-bottom:10px}
+.food-groups{display:grid;gap:8px}
+.food-group{border:1px solid #55202c;background:#100508}
+.food-group summary{padding:12px;cursor:pointer;color:var(--gd);font-weight:700}
+.food-group summary::marker{color:var(--gl)}
+.food-group .chips{padding:0 10px 10px}
+.food-group .chip{flex:1 1 145px;text-align:left;min-height:48px}
+.food-group[hidden],.food-group .chip[hidden]{display:none}
+.food-tip{margin:0 0 8px}
+#qm .win{max-height:calc(100dvh - 32px);overflow-y:auto}
+.dayrow{align-items:flex-start}
+.dayrow>span:last-child{text-align:right}
+@media(max-width:390px){
+ body{padding-left:8px;padding-right:8px}
+ main{margin-top:8px}
+ .pan{padding:10px;margin-bottom:10px}
+ .pr{gap:6px;flex-wrap:wrap}
+ .lv{font-size:24px}
+ .grid{gap:8px}
+ .cd,.cb,.cf{min-height:158px}
+ .fl{gap:6px}
+ .bt{padding:9px 10px}
+ .throne h1{font-size:20px}
+ .dayrow{display:block}
+ .dayrow>span:last-child{display:block;text-align:left;margin-top:3px}
+}
+
+/* ===== SOLO LEVELING SYSTEM WINDOWS (themes) ===== */
+body{--rgb:200,30,60;--acc:#ff4d6a;--acc2:#ffa27a;--deep:#0b0307;--ln:#c4304e;--gl:#ff5a73;--pn:rgba(20,5,10,.94);--tx:#ffe9df;--mu:#c9959a;background:radial-gradient(90% 40% at 50% 112%,rgba(110,35,200,.28),transparent 70%),radial-gradient(100% 45% at 50% -8%,rgba(var(--rgb),.30),var(--deep) 66%) fixed,var(--deep)}
+body[data-theme=system]{--rgb:47,143,255;--acc:#6fd0ff;--acc2:#c8efff;--deep:#000208;--ln:#3aa0ff;--gl:#6fd0ff;--pn:rgba(2,8,22,.92);--tx:#e6f3ff;--mu:#7fa4cf}
+body[data-theme=shadow]{--rgb:140,60,255;--acc:#b36bff;--acc2:#e3c2ff;--deep:#05010d;--ln:#8a3ff0;--gl:#b36bff;--pn:rgba(8,3,20,.93);--tx:#efe6ff;--mu:#9a86bd}
+body:after{background:repeating-linear-gradient(transparent 0 2px,rgba(var(--rgb),.035) 2px 3px)}
+.pan{background:linear-gradient(180deg,rgba(var(--rgb),.16),transparent 40%),var(--pn);border:1px solid var(--ln);border-radius:2px;outline:1px solid rgba(var(--rgb),.38);outline-offset:3px;box-shadow:0 0 18px rgba(var(--rgb),.38),inset 0 0 28px rgba(var(--rgb),.10)}
+.pan:before,.pan:after{border-color:var(--acc)}
+.pan h3{display:flex;align-items:center;gap:8px;margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid rgba(var(--rgb),.5);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc2);text-shadow:0 0 10px var(--acc)}
+.pan h3:before{content:"";flex:none;width:7px;height:7px;background:var(--acc);box-shadow:0 0 8px var(--acc);transform:rotate(45deg)}
+.pan.fail{border-color:var(--rd);outline-color:rgba(255,56,87,.4)}
+.bar{background:#000;border:1px solid rgba(var(--rgb),.65);height:10px}
+.bar i{background:linear-gradient(90deg,rgba(var(--rgb),.9),var(--acc2));box-shadow:0 0 10px var(--acc)}
+.lv{color:var(--acc2);text-shadow:0 0 16px var(--acc)}
+.big{color:var(--acc2);text-shadow:0 0 18px var(--acc)}
+.tmr{color:var(--acc2)}.tmr.red{color:var(--rd)}
+nav{background:rgba(0,0,0,.94);border-top:1px solid var(--ln);box-shadow:0 -4px 22px rgba(var(--rgb),.28)}
+nav button.on{color:var(--acc2);text-shadow:0 0 10px var(--acc);box-shadow:inset 0 2px 0 var(--acc)}
+.cb{background:repeating-linear-gradient(135deg,rgba(var(--rgb),.12) 0 10px,transparent 10px 20px),var(--deep);border-color:var(--ln);color:var(--acc2);text-shadow:0 0 16px var(--acc);box-shadow:0 0 16px rgba(var(--rgb),.45)}
+.cf{border-color:var(--ln)}.cf.r1{border-color:#4fc3ff;box-shadow:0 0 14px #4fc3ff}.cf.r2{border-color:var(--gd);box-shadow:0 0 22px var(--gd)}
+.fig{color:var(--acc2)}
+.bt{border-color:var(--ln);color:var(--acc2);background:rgba(var(--rgb),.16)}.bt.g{border-color:var(--ok);color:var(--ok);background:rgba(214,168,79,.12)}
+input,select{border-color:var(--ln);background:var(--deep);color:var(--tx)}
+.chip{border-color:rgba(var(--rgb),.6)}.chip.j{border-color:var(--rd)}.chip.sel{border-color:var(--acc);color:var(--acc2);background:rgba(var(--rgb),.2)}
+.row{border-bottom-color:rgba(var(--rgb),.28)}
+.statbox,.food-group{border-color:rgba(var(--rgb),.5);background:var(--deep)}
+.throne{background:radial-gradient(ellipse at 50% 0%,rgba(var(--rgb),.3),transparent 72%),var(--pn)}
+.sigil{text-shadow:0 0 22px var(--acc)}
+.stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(var(--rgb),.22)}.stat-row b{color:var(--acc2)}
+#nag .win,#qm .win{border-color:var(--ln);box-shadow:0 0 34px rgba(var(--rgb),.7),inset 0 0 24px rgba(var(--rgb),.14);outline:1px solid rgba(var(--rgb),.4);outline-offset:4px}
+#nag .wt,#qm .wt{color:var(--acc2);text-shadow:0 0 10px var(--acc)}
+#nag.red .win{border-color:var(--rd);box-shadow:0 0 34px var(--rd)}#nag.red .wt{color:var(--rd)}
+#nag.arise h2{font-size:40px;letter-spacing:.3em;color:var(--acc2);text-shadow:0 0 18px var(--acc),0 0 42px var(--acc);animation:ar 1.6s ease-out}
+@keyframes ar{from{opacity:0;transform:scale(1.6)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#nag.arise h2{animation:none}}
+</style></head><body>
+<main><div id="app"></div></main>
+<nav id="nv"></nav>
+<div id="nag"><div class="win"><div class="wt">[ SYSTEM ]</div><h2 id="nt"></h2><p id="nm"></p><button id="nb">Accept</button></div></div>
+<div id="qm"><div class="win"><div class="wt">[ ADD FOOD ]</div><h2 id="qn"></h2><div class="mu sm" id="qk"></div><div class="stp"><button class="bt" id="qd">-</button><input id="qv" type="number" inputmode="decimal" step="0.5"><button class="bt" id="qu">+</button></div><div class="chips" id="qc"></div><div id="qt2"></div><div class="fl"><button class="bt" id="qx">Cancel</button><button class="bt g" id="qa">Add to log</button></div></div></div>
+<script>
+var KEY="fitlock_v1";
+// id, name, unit, easy, hard, kcal per unit
+var P=[["pushup","Push up","x",10,70,.45],["situp","Sit up","x",5,35,.3],["plank","Elbow plank","s",5,20,.1],["climbers","Climbers","x",5,35,.5],["lunges","Lunges","x",10,40,.4],["squats","Squats","x",5,35,.4],["jacks","Jumping jacks","x",15,60,.2],["bridge","Glute bridge","x",10,40,.25],["legs","Leg raises","x",8,30,.3],["knees","High knees","x",20,80,.2],["wall","Wall sit","s",10,45,.15]];
+var F={
+squats:[[60,10,60,18,60,38,68,28,68,28,60,50,62,62,60,50,62,62],[66,24,64,32,50,48,80,34,80,34,70,48,62,62,70,48,62,62]],
+lunges:[[60,10,60,18,60,38,68,28,68,28,60,50,62,62,60,50,62,62],[60,14,60,22,60,42,66,34,54,34,76,46,76,62,48,56,36,62]],
+pushup:[[104,36,96,40,50,50,96,62,96,62,30,56,10,62,30,56,10,62],[104,54,94,54,50,57,92,62,92,62,30,59,10,62,30,59,10,62]],
+plank:[[104,38,96,42,52,50,106,62,106,62,30,56,10,62,30,56,10,62],[104,38,96,42,52,47,106,62,106,62,30,54,10,62,30,54,10,62]],
+climbers:[[100,34,92,38,50,44,92,62,92,62,70,52,62,62,30,54,10,62],[100,34,92,38,50,44,92,62,92,62,30,54,10,62,70,52,62,62]],
+situp:[[14,56,24,58,60,58,40,50,40,50,80,40,96,58,80,40,96,58],[52,22,48,30,60,58,70,34,70,34,80,40,96,58,80,40,96,58]],
+jacks:[[60,10,60,18,60,40,52,38,68,38,56,52,56,62,64,52,64,62],[60,10,60,18,60,40,40,2,80,2,48,52,40,62,72,52,80,62]],
+bridge:[[14,56,24,58,60,58,40,60,40,60,76,44,84,60,76,44,84,60],[14,56,24,58,56,40,40,60,40,60,78,42,88,60,78,42,88,60]],
+legs:[[14,56,24,58,60,58,40,60,40,60,80,58,100,58,80,58,100,58],[14,56,24,58,60,58,40,60,40,60,60,40,60,22,60,40,60,22]],
+knees:[[60,10,60,18,60,38,70,26,52,26,74,34,74,48,60,50,60,62],[60,10,60,18,60,38,70,26,52,26,60,50,60,62,74,34,74,48]],
+wall:[[40,10,40,18,40,44,52,40,52,40,66,44,66,62,66,44,66,62],[40,10,40,18,40,45,54,44,54,44,66,45,66,62,66,45,66,62]]};
+
+var HAB=["💧 Drink 3 litres of water (use the tracker)","🚶 Walk 20 minutes","🍔 Avoid junk food and cold drinks","🥗 Eat veg protein: dal, paneer, soya, sprouts","🌀 Stomach vacuum: 3 x 15 sec","😴 Sleep 7 hours (tick before bed)"];
+// [name, kcal, protein g] - vegetarian only
+var HF=[["Roti (wheat, small, thin)",70,2.5],["Bajri rotla (1 piece)",140,4],["Bhakhri",150,4],["Paratha (small)",140,3],["Thepla",100,3],["Khakhra",50,2],["Rice (small serving)",130,2.5],["Khichdi (small serving)",170,5],["Tuver dal (4-5 spoons)",70,4],["Moong dal (1 vati)",110,7],["Urad dal (1 vati)",140,8],["Dal fry (1 vati)",190,9],["Cabbage sabzi (1 vati)",90,2],["Cauliflower sabzi (1 vati)",100,3],["Bhindi sabzi (1 vati)",130,2],["Tomato sabzi (1 vati)",90,1],["Potato sabzi (1 vati)",160,3],["Tindora sabzi (1 vati)",100,2],["Chori sabzi (1 vati)",150,7],["Ringan sabzi (1 vati)",120,2],["Ringan bharta (1 vati)",140,2],["Gavar sabzi (1 vati)",110,4],["Dudhi sabzi (1 vati)",80,2],["Turiya sabzi (1 vati)",80,2],["Mixed veg (1 vati)",110,3],["Paneer curry (1 vati)",250,10],["Rajma (1 vati)",160,8],["Chana (1 vati)",170,9],["Sprouts (1 vati)",120,8],["Soya chunks (1 vati)",170,20],["Curd (1 vati)",90,5],["Buttermilk (glass)",40,2],["Milk (glass)",150,8],["Tea with sugar",70,1],["Cheese cube (Rs 20 size)",80,5],["Fudina chutney (1 spoon)",10,0],["Pulav (1 plate)",330,6],["Appe / appam (1 small piece)",40,1],["Mini uttapa (palm size, 1 piece)",45,1],["Poha (plate)",250,5],["Upma (plate)",220,5],["Idli",40,1],["Dosa",130,3],["Dhokla (2 pcs)",120,4],["Handvo (slice)",160,5],["Banana",100,1],["Apple",80,0],["Peanuts 30g",170,7]];
+var JF=[["Pasta (100 g dry, with sauce)",430,12],["Maggi Rs 15 pack (70 g)",310,7],["Maggi Rs 30 pack (140 g)",620,14],["Rs 10 snack packet (chips/kurkure)",145,2],["Chorafali (50 g)",260,5],["Dabeli",250,6],["Vada pav",290,7],["Burger (aloo tikki)",330,8],["Pizza slice (medium, veg)",250,10],["Pizza (half of a medium)",750,30],["Ice cream (1 scoop)",140,2],["Veg noodles (plate, small-medium)",400,9],["Veg manchurian (plate, small-medium)",330,7],["Sweet (1 piece)",150,2],["Ladoo (1)",180,3],["Kaju katli (1)",55,1],["Mohanthal (1)",150,3],["Ghughra (1)",180,3],["Gulab jamun (1)",150,2],["Peda (1)",90,2],["Basundi (1 vati)",250,7],["Samosa",260,4],["Kachori",200,4],["Pakora (plate)",300,6],["Pav bhaji (plate)",400,10],["Pani puri (6 pcs)",200,3],["French fries",365,4],["Veg momos (6 pcs)",250,7],["Fafda-jalebi",400,6],["Chocolate bar",230,3],["Cold drink (300 ml)",130,0]];
+var FD=HF.map(function(x){return x.concat(0)}).concat(JF.map(function(x){return x.concat(1)}));
+var VEG_GROUPS=["Roti, grains & rice","Dal, beans & protein","Sabzi & vegetables","Dairy & drinks","Breakfast & snacks","Fruit & extras"];
+function foodGroup(name){
+if(/^(Roti|Bajri rotla|Bhakhri|Paratha|Thepla|Khakhra|Rice|Khichdi|Pulav)/i.test(name))return 0;
+if(/^(Tuver dal|Moong dal|Urad dal|Dal fry|Rajma|Chana|Sprouts|Soya chunks)/i.test(name))return 1;
+if(/sabzi|Ringan bharta|Mixed veg|Paneer curry/i.test(name))return 2;
+if(/^(Curd|Buttermilk|Milk|Cheese|Tea)/i.test(name))return 3;
+if(/^(Appe|Mini uttapa|Poha|Upma|Idli|Dosa|Dhokla|Handvo|Pasta|Maggi|Veg noodles|Veg manchurian|Dabeli|Vada pav|Burger|Pizza|Samosa|Kachori|Pakora|Pav bhaji|Pani puri|French fries|Veg momos|Fafda-jalebi|Rs 10 snack)/i.test(name))return 4;
+return 5}
+var RN=["Common","RARE","JACKPOT"],RM=[1,1.25,2],RC=[1,2,5],XP=[10,15,30];
+var MSG=["Your daily quest is incomplete. Failure has a penalty.","Rise, Player. The system is watching.","Your belly will not go in by itself.","Weakness is a choice. Do the first rep.","Phone later. Quest now.","Time is running out. Clear your quest."];
+var mem=null,timer=null,tab="h",fresh=-1,lastN=0,foodQuery="";
+function td(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+var lastD=td();
+function init(){return{lvl:0,cycle:0,streak:0,best:0,days:0,coins:0,exp:0,every:2,goal:2000,qty:1,bottle:750,passes:0,shield:0,pz:false,note:"",flash:"",w:[],steps:{},food:{},water:{},history:[],today:null}}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var v=Object.assign(init(),JSON.parse(r));if(!Array.isArray(v.history))v.history=[];return v}}catch(e){}return mem||init()}
+function save(){mem=S;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var S=load();
+function logAct(type,text){if(!Array.isArray(S.history))S.history=[];S.history.push({at:new Date().toISOString(),day:td(),type:type,text:text})}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function newDay(){var d=td(),t=S.today;
+if(t&&t.cards&&t.date===d){t.pen=t.pen||[];return}
+if(t&&t.cards&&!t.complete){
+if(S.shield>0){S.shield--;S.note="[SYSTEM] Quest failed. A Streak Shield was used. Your streak is safe."}
+else{S.streak=0;S.coins=Math.max(0,S.coins-10);S.pz=true;S.note="[SYSTEM] Quest failed at 12:00 AM. Penalty: -10 gold and streak reset. PENALTY ZONE today: reps +25%."}}
+else if(t&&t.complete)S.pz=false;
+var dk=shuf(P.map(function(p){return p[0]}));
+S.today={date:d,lvl:Math.min(S.lvl,6),cycle:S.cycle,brk:S.days%8===7&&!S.pz,pz:S.pz,h:{},pen:[],cards:dk.slice(0,6).map(function(x){return{ex:x,rev:0,rar:0,done:0,j:1}}),left:dk.slice(6),complete:false};save()}
+function ex(id){return P.filter(function(p){return p[0]===id})[0]}
+function amt(c){var e=ex(c.ex),t=S.today,v=(e[3]+(e[4]-e[3])*t.lvl/6)*RM[c.rar]*(1+.1*t.cycle)*(t.brk?.5:1)*(t.pz?1.25:1)*(c.j||1);return Math.max(3,Math.round(v))}
+function path(q){return"M"+q[6]+" "+q[7]+"L"+q[2]+" "+q[3]+"L"+q[8]+" "+q[9]+"M"+q[2]+" "+q[3]+"L"+q[4]+" "+q[5]+"L"+q[10]+" "+q[11]+"L"+q[12]+" "+q[13]+"M"+q[4]+" "+q[5]+"L"+q[14]+" "+q[15]+"L"+q[16]+" "+q[17]}
+function fig(id){var p=F[id],a=p[0],b=p[1],pa=path(a),pb=path(b);
+return'<svg class="fig" viewBox="0 0 120 70"><line x1="4" y1="63" x2="116" y2="63" stroke="currentColor" opacity=".25"/><path d="'+pa+'" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="d" values="'+pa+";"+pb+";"+pa+'" dur="1.8s" repeatCount="indefinite"/></path><circle r="6" cx="'+a[0]+'" cy="'+a[1]+'" fill="currentColor"><animate attributeName="cx" values="'+a[0]+";"+b[0]+";"+a[0]+'" dur="1.8s" repeatCount="indefinite"/><animate attributeName="cy" values="'+a[1]+";"+b[1]+";"+a[1]+'" dur="1.8s" repeatCount="indefinite"/></circle></svg>'}
+
+function pend(){var t=S.today;return t.cards.filter(function(c){return!c.done}).length+HAB.filter(function(h,i){return!t.h[i]}).length+t.pen.filter(function(p){return!p.d}).length}
+function fin(){var t=S.today;if(t.complete||pend())return;t.complete=true;S.streak++;S.best=Math.max(S.best,S.streak);S.days++;S.coins+=10;S.exp+=20;S.lvl=Math.min(S.lvl+1,7);if(S.lvl>6){S.lvl=0;S.cycle++}logAct("quest","Conquered the daily quest");document.getElementById("nt").textContent="[ ARISE ]";document.getElementById("nm").textContent="Daily quest cleared. +10 gold, +20 EXP. The system acknowledges you.";document.getElementById("nag").className="show arise";buzz()}
+function burn(){var t=S.today,k=0;t.cards.forEach(function(c){if(c.done)k+=amt(c)*ex(c.ex)[5]});return Math.round(k+(S.steps[td()]||0)*.04)}
+function eaten(){var f=S.food[td()]||[],k=0,p=0;f.forEach(function(x){k+=x[1];p+=x[2]||0});return[k,p]}
+function p2(x){return(x<10?"0":"")+x}
+function hrs(){var n=new Date();return 24-n.getHours()-n.getMinutes()/60}
+function left(){var n=new Date(),e=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1),ms=e-n;return"Time left: "+p2(Math.floor(ms/36e5))+":"+p2(Math.floor(ms%36e5/6e4))+":"+p2(Math.floor(ms%6e4/1e3))+" (deadline 12:00 AM)"}
+function lvl(){return Math.floor(Math.sqrt(S.exp/25))+1}
+var TITLES=["Weakest Hunter","Iron Will","Dungeon Breaker","Gate Slayer","Elite Knight","Monarch"];
+function statsOf(){var hist=Array.isArray(S.history)?S.history:[],ne=0,fo=0,sp=0,wa=0;hist.forEach(function(e){if(e.type==="exercise")ne++});
+Object.keys(S.food||{}).forEach(function(k){fo+=(S.food[k]||[]).length});Object.keys(S.steps||{}).forEach(function(k){sp+=S.steps[k]||0});Object.keys(S.water||{}).forEach(function(k){wa+=S.water[k]||0});
+return{STR:10+ne,AGI:10+Math.floor(sp/2000),VIT:10+Math.floor(wa/1500),INT:10+Math.floor(fo/5),SENSE:10+S.best}}
+function statusWin(){var L=lvl(),k=statsOf();
+return'<div class="pan"><h3>[ STATUS ]</h3><div class="stat-row"><span class="mu">NAME</span><b>Demon Lord</b></div><div class="stat-row"><span class="mu">JOB</span><b>Player</b></div><div class="stat-row"><span class="mu">TITLE</span><b>'+TITLES[Math.min(5,Math.floor((L-1)/4))]+'</b></div><div class="stat-row"><span class="mu">LEVEL</span><b>'+L+'</b></div><div class="statgrid" style="margin-top:10px">'+["STR","AGI","VIT","INT","SENSE"].map(function(n){return'<div class="statbox"><b>'+k[n]+'</b><span class="mu sm">'+n+'</span></div>'}).join("")+'</div><div class="mu sm" style="margin-top:8px">STR: exercises done | AGI: steps | VIT: water | INT: food logged | SENSE: best streak</div></div>'}
+function hdr(){var L=lvl(),a=25*(L-1)*(L-1),b=25*L*L,rk="EDCBAS".charAt(Math.min(5,Math.floor((L-1)/4))),t=S.today;
+return'<div class="pan"><div class="pr"><div><div class="mu sm">OVERLORD</div><b>Demon Lord</b></div><div class="rk mu">Rank <b>'+rk+'</b></div><div class="lv">Lv.'+L+'</div><div class="gd">🪙 '+S.coins+'</div></div><div class="bar"><i style="width:'+Math.round((S.exp-a)/(b-a)*100)+'%"></i></div><div class="mu sm">EXP '+(S.exp-a)+" / "+(b-a)+' | Reign '+S.streak+' days</div><div class="tmr" id="tm">'+(t.complete?"Quest cleared. Deadline 12:00 AM":left())+"</div></div>"}
+function R(){newDay();var t=S.today,h=hdr();
+document.getElementById("nv").innerHTML=[["h","♛ Throne"],["a","⚔️ Quest"],["f","🍛 Food"],["s","👟 Steps"],["b","🛒 Shop"],["z","📜 Analysis"],["l","📈 Log"]].map(function(x){return'<button data-t="'+x[0]+'" class="'+(tab===x[0]?"on":"")+'">'+x[1]+"</button>"}).join("");
+if(tab==="h"){var doneToday=t.cards.filter(function(c){return c.done}).length,foodToday=(S.food[td()]||[]).length;
+h+='<div class="pan throne"><div class="sigil">♛</div><h1>THE DEMON LORD&#39;S THRONE</h1><div class="mu">Your body is the kingdom. Claim it one quest at a time.</div><div class="fl" style="justify-content:center"><button class="bt g" data-go="a">Enter Today&#39;s Quest</button></div></div>'+
+statusWin()+'<div class="pan"><h3>[ REIGN STATUS ]</h3><div class="statgrid"><div class="statbox"><b>'+S.streak+'</b><span class="mu sm">Current streak</span></div><div class="statbox"><b>'+S.best+'</b><span class="mu sm">Best streak</span></div><div class="statbox"><b>'+S.days+'</b><span class="mu sm">Quests conquered</span></div><div class="statbox"><b>'+doneToday+'/6</b><span class="mu sm">Exercise seals today</span></div></div></div>'+
+'<div class="pan"><h3>[ TODAY&#39;S DECREE ]</h3><div class="mu">'+(t.complete?"The realm is secured. Your quest is complete.":"Your daily quest awaits. "+pend()+" tasks remain before midnight.")+'</div><div class="fl"><button class="bt" data-go="z">View Chronicle</button><button class="bt" data-go="l">Body & Settings</button></div></div>'+
+'<div class="pan"><h3>[ LATEST TRIBUTES ]</h3><div class="mu sm">'+foodToday+' food entries logged today · '+(S.water[td()]||0)+' ml water · '+(S.steps[td()]||0)+' steps</div></div>'}
+if(tab==="a"){var N=12+t.pen.length,tot=N-pend(),rv=t.cards.filter(function(c){return c.rev}),rp=0,sq=0;
+rv.forEach(function(c){var e=ex(c.ex);if(e[2]==="s")sq+=amt(c);else rp+=amt(c)});
+if(S.note)h+='<div class="pan fail" data-n="1">'+S.note+'<div class="mu sm">Tap to dismiss</div></div>';
+if(t.pz)h+='<div class="pan fail">[ PENALTY ZONE ] All reps are +25% today.</div>';
+h+='<div class="pan"><h3>[ DAILY QUEST: STRENGTH TRAINING ]</h3><div class="mu">'+(t.brk?"BREAK day (light, reps halved). ":"Level "+(t.lvl+1)+" of 7"+(t.cycle?", round "+(t.cycle+1):"")+". ")+'Clear it before 12:00 AM.</div><div class="bar" style="margin:8px 0"><i style="width:'+Math.round(tot/N*100)+'%"></i></div><div>Tasks done: <b>'+tot+"/"+N+"</b> (6 exercise cards + 6 daily habits"+(t.pen.length?" + "+t.pen.length+" penalty":"")+')</div><div class="mu sm" style="margin-top:6px">Cards opened: '+rv.length+"/6 | Revealed total: "+rp+" reps"+(sq?" + "+sq+" sec timed":"")+"<br>1 rep = doing the move once, so 10 reps = 10 times.</div></div>";
+h+='<div class="grid">';
+t.cards.forEach(function(c,i){
+if(!c.rev)h+='<div class="cd"><button class="cb" data-o="'+i+'">?<small>Tap to open</small></button></div>';
+else{var e=ex(c.ex),a=amt(c);
+h+='<div class="cd"><div class="cf r'+c.rar+(fresh===i?" new":"")+(c.done?" dn":"")+'">'+fig(c.ex)+"<b>"+e[1]+'</b><div class="q">'+a+(e[2]==="s"?" sec":" reps")+'</div><div class="rr">'+RN[c.rar]+" +"+RC[c.rar]+" gold</div>"+
+(c.done?"<b>✓ Cleared</b>":'<div class="mini"><button class="bt g" data-d="'+i+'">Done</button>'+(e[2]==="s"?'<button class="bt o" data-m="'+i+'">Timer</button>':"")+(t.left.length&&S.coins>=3?'<button class="bt o" data-r="'+i+'">🎲 3 gold</button>':"")+"</div>")+"</div></div>"}});
+fresh=-1;h+="</div>";
+var wm=S.water[td()]||0;
+h+='<div class="pan"><h3>[ HYDRATION ]</h3><div class="bar"><i style="width:'+Math.min(100,wm/30)+'%"></i></div><div class="mu" style="margin:6px 0">'+wm+" / 3000 ml (about "+(wm/1000).toFixed(1)+' litres)</div><div class="fl"><button class="bt" data-w="250">+ Glass 250</button><button class="bt" data-w="'+S.bottle+'">+ Bottle '+S.bottle+'</button><button class="bt o" data-w="-250">-</button></div><div class="fl"><input id="bt" type="number" inputmode="numeric" placeholder="My bottle size (ml)"><button class="bt" id="bs">Set</button></div><div class="mu sm" style="margin-top:6px">Not sure of your bottle size? Pour a 1 litre packaged water bottle into yours. If 1 litre is exactly what fills it, set 1000. If 1 litre fills two of your bottles, set 500. About 3 litres a day suits 85 to 90 kg.</div></div>';
+h+='<div class="pan"><h3>[ DAILY HABITS ] ('+HAB.filter(function(x,i){return t.h[i]}).length+"/6)</h3>"+HAB.map(function(x,i){return'<div class="row'+(t.h[i]?" on":"")+'"'+(i?' data-h="'+i+'"':"")+'><span class="t">'+x+'</span><span class="box">'+(t.h[i]?"✓":"")+"</span></div>"}).join("")+
+t.pen.map(function(p,i){return'<div class="row'+(p.d?" on":"")+'" data-p="'+i+'"><span class="t">⚠ Penalty: '+p.n+'</span><span class="box">'+(p.d?"✓":"")+"</span></div>"}).join("")+"</div>";
+h+='<div class="pan st '+(t.complete?"good":"fail")+'">'+(t.complete?"[ QUEST CLEARED ] +10 gold, +20 EXP. A new quest arrives at 12:00 AM.":"[ QUEST ACTIVE ] "+pend()+" tasks left. Fail to clear them before 12:00 AM and the penalty triggers.")+"</div>"}
+if(tab==="f"){var e2=eaten(),b=burn(),rem=S.goal-e2[0]+b,fl=S.food[td()]||[],fm=S.flash;S.flash="";
+h+=(fm?'<div class="pan fail">'+fm+"</div>":"")+'<div class="pan"><h3>[ CALORIES ]</h3><div class="big">'+Math.abs(rem)+'</div><div class="mu c">'+(rem>=0?"kcal left to eat today":"kcal over your limit")+'</div><div class="bar" style="margin:10px 0"><i style="width:'+Math.min(100,Math.round(e2[0]/Math.max(1,S.goal+b)*100))+'%"></i></div><div class="mu sm">Eaten '+e2[0]+" | Burned (exercise + steps) about "+b+" | Protein "+e2[1]+" g | Limit "+S.goal+'</div><div class="fl"><input id="gl" type="number" inputmode="numeric" placeholder="Daily limit (kcal)"><button class="bt" id="gs">Set</button></div><div class="mu sm" style="margin-top:6px">The starting limit of 2000 kcal is a rough guess for 85 to 90 kg. Change it if a doctor or dietitian advises differently. Calories are estimates.</div></div>';
+var groups=VEG_GROUPS.map(function(label,g){var items=FD.map(function(x,i){return{x:x,i:i}}).filter(function(o){return o.x[3]===0&&foodGroup(o.x[0])===g});
+return'<details class="food-group" data-food-group="'+g+'"'+(g===0?' open':"")+'><summary>'+label+' ('+items.length+')</summary><div class="chips">'+items.map(function(o){return'<button class="chip" data-f="'+o.i+'" data-food-name="'+esc(o.x[0].toLowerCase())+'">'+esc(o.x[0])+' <span>'+o.x[1]+'</span></button>'}).join("")+'</div></details>'}).join("");
+h+='<div class="pan"><h3>[ VEG FOOD ]</h3><div class="mu sm food-tip">Search or open a section. Tap a food to choose quantity and add it to your log.</div><input class="food-search" id="foodSearch" type="search" placeholder="Search vegetarian food" value="'+esc(foodQuery)+'"><div class="food-groups">'+groups+'</div></div><div class="pan"><h3>[ JUNK FOOD ]</h3><div class="mu sm" style="margin-bottom:8px">Junk Passes: '+S.passes+". Without a pass, each junk item adds a penalty task (20 jumping jacks).</div><div class=\"chips\">"+FD.map(function(x,i){return x[3]===1?'<button class="chip j" data-f="'+i+'">'+esc(x[0])+" <span>"+x[1]+"</span></button>":""}).join("")+'</div></div>';
+h+='<div class="pan"><h3>[ OTHER FOOD ]</h3><div class="fl"><input id="fn" placeholder="Food name"><input id="fk" type="number" inputmode="numeric" placeholder="kcal"><button class="bt" id="fa">Add</button></div></div>';
+h+='<div class="pan"><h3>[ FOOD LOG FOR TODAY ]</h3>'+(fl.length?fl.map(function(x,i){return'<div class="row" data-x="'+i+'"><span class="t">'+x[0]+'</span><span class="mu">'+x[1]+" kcal ✕</span></div>"}).join(""):'<div class="mu">Nothing added yet.</div>')+"</div>"}
+if(tab==="s"){var sc=S.steps[td()]||0;
+h+='<div class="pan"><h3>[ STEP COUNTER ]</h3><div class="big">'+sc+'</div><div class="mu c">steps (target 8000)</div><div class="bar" style="margin:10px 0"><i style="width:'+Math.min(100,sc/80)+'%"></i></div><div class="c" id="sl">'+slive()+'</div><div class="fl"><button class="bt g" id="sb" style="flex:1">'+(st.on?"Stop":"Start step counter")+'</button><button class="bt o" id="sm">+100</button></div></div>'+
+'<div class="pan mu sm">The phone motion sensor only counts a step when the rhythm looks like walking. If GPS speed is above 15 km/h, steps count as 0 (bike, car, bus). Between 8 and 15 km/h only fast running-style steps count. With no GPS signal it uses rhythm only, so steps inside a vehicle may be counted wrongly.<br><br><b>Important:</b> the counter works only while this page is open in Chrome with the screen on. It cannot count in the background.</div>'}
+if(tab==="b"){var fm2=S.flash;S.flash="";
+var it=function(ic,n,d,k,p){return'<div class="row" style="cursor:default"><span class="t"><b>'+ic+" "+n+'</b><br><span class="mu sm">'+d+'</span></span><button class="bt" data-b="'+k+'">'+p+" gold</button></div>"};
+h+=(fm2?'<div class="pan fail">'+fm2+"</div>":"")+'<div class="pan"><h3>[ SHOP ]</h3><div class="mu sm" style="margin-bottom:6px">Gold: <b class="gd">'+S.coins+"</b> | Junk Passes: "+S.passes+" | Streak Shields: "+S.shield+"</div>"+
+it("🍔","Junk Pass","Eat one junk item with no penalty task.","pass",40)+it("🛡️","Streak Shield","Saves your streak and skips the penalty if you miss a quest.","shield",30)+it("🎁","Loot Box","Gamble: 45% win. Prizes: 15 gold, a Junk Pass or a Shield.","box",10)+"</div>"+
+'<div class="pan"><h3>[ HOW GOLD WORKS ]</h3><div class="mu sm">Earn: Common card +1, RARE +2, JACKPOT +5, clearing the whole quest +10.<br>Spend: Junk Pass, Streak Shield, Loot Box, or re-roll a card (3 gold, on the card).<br>Lose: miss the 12:00 AM deadline and you lose 10 gold, your streak resets, and tomorrow is a Penalty Zone (reps +25%).</div></div>'}
+if(tab==="l"){var w=S.w,l=w.slice(-6).reverse().map(function(e){return e.d+": "+(e.kg||"-")+" kg, belly "+(e.wc||"-")+" cm"}).join("<br>")||"No entries yet.",d="";
+if(w.length>1&&w[0].kg&&w[w.length-1].kg){var df=(w[w.length-1].kg-w[0].kg).toFixed(1);d="<br><b>Change since start: "+(df>0?"+":"")+df+" kg</b>"}
+h+='<div class="pan"><h3>[ BODY LOG ]</h3><div class="mu sm">Starting range: 85 to 90 kg.</div><div class="fl"><input id="kg" type="number" step="0.1" inputmode="decimal" placeholder="kg"><input id="wc" type="number" step="0.5" inputmode="decimal" placeholder="Belly cm"><button class="bt" id="sv">Save</button></div><div class="mu" style="margin-top:10px">'+l+d+'</div></div>'+
+'<div class="pan"><h3>[ THEME ]</h3><div class="fl" style="margin:0"><select id="th"><option value="demon">Demon Lord (crimson)</option><option value="system">System (blue windows)</option><option value="shadow">Shadow Monarch (violet)</option></select></div></div>'+'<div class="pan"><h3>[ REMINDERS ]</h3><div class="fl" style="margin:0 0 8px"><select id="ev"><option value="1">Remind me every 1 min</option><option value="2">Remind me every 2 min</option><option value="5">Remind me every 5 min</option><option value="10">Remind me every 10 min</option></select></div><div class="mu sm">In the last 2 hours before the deadline, reminders come every minute. Reminders only appear while this app is open in Chrome. Phone alarms are a good backup.</div></div>'+'<div class="pan"><h3>[ BACKUP ]</h3><div class="fl" style="margin:0"><button class="bt" id="bx" style="flex:1">Copy backup</button><button class="bt" id="bi" style="flex:1">Restore backup</button></div><div class="mu sm" style="margin-top:6px">Your progress lives in this browser. Copy a backup now and then and keep it in a note or WhatsApp to yourself.</div></div>'}
+if(tab==="z"){var hist=Array.isArray(S.history)?S.history:[],keys=[],days={};
+for(var di=6;di>=0;di--){var dd=new Date();dd.setDate(dd.getDate()-di);var dk=dd.getFullYear()+"-"+(dd.getMonth()+1)+"-"+dd.getDate();keys.push(dk);days[dk]={quests:0,exercise:0,events:0}}
+hist.forEach(function(ev){if(days[ev.day]){days[ev.day].events++;if(ev.type==="quest")days[ev.day].quests++;if(ev.type==="exercise")days[ev.day].exercise++}});
+var recent=keys.map(function(k){var f=S.food[k]||[];return'<div class="dayrow"><span>'+esc(k)+'</span><span class="mu sm">'+days[k].quests+' quests · '+days[k].exercise+' exercises · '+(S.steps[k]||0)+' steps · '+(S.water[k]||0)+' ml · '+f.length+' meals</span></div>'}).join("");
+var foodCount=0,foodKcal=0,waterTotal=0,stepTotal=0;Object.keys(S.food||{}).forEach(function(k){(S.food[k]||[]).forEach(function(f){foodCount++;foodKcal+=Number(f[1])||0})});Object.keys(S.water||{}).forEach(function(k){waterTotal+=Number(S.water[k])||0});Object.keys(S.steps||{}).forEach(function(k){stepTotal+=Number(S.steps[k])||0});
+var latest=hist.slice(-30).reverse().map(function(ev){var dt=new Date(ev.at),tm=isNaN(dt.getTime())?"":dt.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});return'<div class="history"><b>'+esc(ev.day||"")+'</b> <span class="mu sm">'+tm+'</span><br><span class="mu">'+esc(ev.text||"Activity")+'</span></div>'}).join("")||'<div class="mu">Your chronicle starts with your next recorded action.</div>';
+h+='<div class="pan throne"><div class="sigil">📜</div><h1>THE CHRONICLE</h1><div class="mu">Seven days of recent deeds. A lifetime of conquest.</div></div>'+
+'<div class="pan"><h3>[ LAST 7 DAYS ]</h3>'+recent+'</div>'+
+'<div class="pan"><h3>[ SINCE THE REIGN BEGAN · ALL-TIME ]</h3><div class="statgrid"><div class="statbox"><b>'+S.days+'</b><span class="mu sm">Quests conquered</span></div><div class="statbox"><b>'+S.best+'</b><span class="mu sm">Best streak</span></div><div class="statbox"><b>'+foodCount+'</b><span class="mu sm">Food entries</span></div><div class="statbox"><b>'+Math.round(foodKcal)+'</b><span class="mu sm">Logged kcal</span></div><div class="statbox"><b>'+Math.round(waterTotal/1000*10)/10+' L</b><span class="mu sm">Water recorded</span></div><div class="statbox"><b>'+stepTotal.toLocaleString()+'</b><span class="mu sm">Steps recorded</span></div></div><div class="mu sm" style="margin-top:8px">All-time body measurements: '+S.w.length+' entries · Total experience: '+S.exp+' · Current reign: '+S.streak+' days</div></div>'+
+'<div class="pan"><h3>[ RECENT DEEDS ]</h3><div class="mu sm">Detailed activity tracking begins now. Previously saved totals are included above; older individual actions were not stored.</div>'+latest+'</div>'}
+document.getElementById("app").innerHTML=h;document.body.setAttribute("data-theme",S.theme||"demon");var th=document.getElementById("th");if(th)th.value=S.theme||"demon";var ev=document.getElementById("ev");if(ev)ev.value=S.every}
+// ---- STEPS ----
+var st={on:0,spd:0,gps:0,gt:0,ts:[],sm:0,gv:0,last:0,veh:0,lp:null,cad:0,warm:0};
+function slive(){if(!st.on)return'<span class="mut">Off</span>';var k=Math.round(st.spd*3.6),g=st.gps&&Date.now()-st.gt<15000;
+return(g?"GPS "+k+" km/h":"No GPS signal")+" | "+(Date.now()<st.veh||(g&&k>15)?"🚗 Vehicle: steps ignored":"🚶 On foot")}
+function addStep(n){var d=td();S.steps[d]=(S.steps[d]||0)+n;if(n>=100)logAct("steps","Added "+n+" steps");save()}
+function onMotion(e){var a=e.accelerationIncludingGravity;if(!a)return;var m=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);
+if(!st.warm){st.sm=st.gv=m;st.warm=1}
+st.sm=st.sm*.7+m*.3;st.gv=st.gv*.98+m*.02;var d=st.sm-st.gv,now=Date.now();
+if(d>1.4&&now-st.last>280){var gap=now-st.last;st.last=now;
+if(gap>1100){st.ts=[now];return}
+st.ts.push(now);if(st.ts.length>5)st.ts.shift();
+var iv=[],i;for(i=1;i<st.ts.length;i++)iv.push(st.ts[i]-st.ts[i-1]);
+if(iv.length<3)return;var s=iv.slice().sort(function(x,y){return x-y}),md=s[Math.floor(s.length/2)];
+if(!iv.every(function(x){return x>md*.7&&x<md*1.4}))return;
+var cad=1000/md,k=st.spd*3.6,g=st.gps&&now-st.gt<15000;
+if(g&&k>15){st.veh=now+8000;return}
+if(now<st.veh)return;
+if(g&&k>8&&cad<2.2)return;
+addStep(iv.length===3&&!st.ok?4:1);st.ok=1}
+else if(now-st.last>1500)st.ok=0}
+function onGps(p){var c=p.coords,s=c.speed,now=Date.now();
+if((s==null||isNaN(s))&&st.lp){var dt=(now-st.lp.t)/1000;if(dt>0){var dx=(c.longitude-st.lp.lo)*111320*Math.cos(c.latitude*Math.PI/180),dy=(c.latitude-st.lp.la)*110540;s=Math.sqrt(dx*dx+dy*dy)/dt}}
+st.lp={la:c.latitude,lo:c.longitude,t:now};if(s==null||isNaN(s))s=0;st.spd=s;st.gps=1;st.gt=now;
+if(s*3.6>15)st.veh=now+8000;var el=document.getElementById("sl");if(el)el.innerHTML=slive()}
+var wl=null,gid=null;
+function startSteps(){function go(){window.addEventListener("devicemotion",onMotion);
+try{gid=navigator.geolocation.watchPosition(onGps,function(){st.gps=0},{enableHighAccuracy:true,maximumAge:1000})}catch(e){}
+try{navigator.wakeLock&&navigator.wakeLock.request("screen").then(function(l){wl=l}).catch(function(){})}catch(e){}
+st.on=1;R()}
+try{if(window.DeviceMotionEvent&&typeof DeviceMotionEvent.requestPermission==="function"){DeviceMotionEvent.requestPermission().then(function(r){if(r==="granted")go()});return}}catch(e){}
+go()}
+function stopSteps(){window.removeEventListener("devicemotion",onMotion);try{navigator.geolocation.clearWatch(gid)}catch(e){}try{wl&&wl.release()}catch(e){}st.on=0;st.gps=0;R()}
+setInterval(function(){var el=document.getElementById("sl");if(el&&tab==="s"){el.innerHTML=slive();var b=document.querySelector(".big");if(b)b.textContent=S.steps[td()]||0}},1000);
+
+// ---- NAG ----
+function beep(){try{var c=new(window.AudioContext||window.webkitAudioContext)(),i;for(i=0;i<3;i++){var o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);g.gain.value=.25;o.start(c.currentTime+i*.3);o.stop(c.currentTime+i*.3+.18)}}catch(e){}}
+function buzz(){try{navigator.vibrate&&navigator.vibrate([400,150,400,150,400])}catch(e){}}
+function nag(){newDay();if(S.today.complete)return;lastN=Date.now();var m=MSG[Math.floor(Math.random()*MSG.length)],late=hrs()<2;
+document.getElementById("nt").textContent="[ QUEST ALERT ]";
+document.getElementById("nm").textContent=pend()+" tasks left. "+left().replace("Time left: ","Time left ")+". "+m;
+document.getElementById("nag").className="show"+(late?" red":"");beep();buzz();
+try{if(document.hidden&&window.Notification&&Notification.permission==="granted"&&navigator.serviceWorker)navigator.serviceWorker.ready.then(function(r){r.showNotification("[SYSTEM] "+pend()+" tasks left",{body:m,icon:"icon-192.png",vibrate:[300,100,300]})})}catch(e){}}
+document.getElementById("nb").onclick=function(){document.getElementById("nag").className="";try{window.Notification&&Notification.permission==="default"&&Notification.requestPermission()}catch(e){}};
+function tick(){var tm=document.getElementById("tm");if(td()!==lastD){lastD=td();R();return}
+if(tm){tm.textContent=S.today.complete?"Quest cleared. Deadline 12:00 AM":left();tm.className="tmr"+(!S.today.complete&&hrs()<2?" red":"")}
+if(!S.today.complete&&Date.now()-lastN>=(hrs()<2?1:S.every)*60000)nag()}
+setInterval(tick,1000);
+// ---- EVENTS ----
+function spin(i){var c=S.today.cards[i],btn=document.querySelector('[data-o="'+i+'"]'),n=0;if(!btn)return;
+var iv=setInterval(function(){btn.innerHTML=P[Math.floor(Math.random()*P.length)][1]+"<small>...</small>";btn.style.fontSize="18px";n++;
+if(n>12){clearInterval(iv);var r=Math.random();c.rar=r<.08?2:r<.3?1:0;c.j=+(.85+Math.random()*.35).toFixed(2);c.rev=1;fresh=i;save();R();if(c.rar)buzz()}},70)}
+function addW(v){var d=td(),t=S.today,before=S.water[d]||0;S.water[d]=Math.max(0,before+v);var delta=S.water[d]-before;if(delta)logAct("water",(delta>0?"Added ":"Removed ")+Math.abs(delta)+" ml water");t.h[0]=S.water[d]>=3000?1:0;fin();save();R()}
+function done(c){c.done=1;var e=ex(c.ex);logAct("exercise","Completed "+amt(c)+(e[2]==="s"?" seconds of ":" reps of ")+e[1]);S.coins+=RC[c.rar];S.exp+=XP[c.rar];fin();save();R()}
+document.getElementById("nv").addEventListener("click",function(e){var b=e.target.closest("button");if(b){tab=b.getAttribute("data-t");R()}});
+document.getElementById("app").addEventListener("click",function(e){var T=e.target,t=S.today,a;
+if(a=T.closest("[data-go]")){tab=a.getAttribute("data-go");R();return}
+if(a=T.closest("[data-n]")){S.note="";save();R();return}
+if(a=T.closest("[data-o]")){spin(+a.getAttribute("data-o"));return}
+if(a=T.closest("[data-d]")){done(t.cards[+a.getAttribute("data-d")]);return}
+if(a=T.closest("[data-r]")){var i=+a.getAttribute("data-r"),c2=t.cards[i];if(S.coins>=3&&t.left.length){S.coins-=3;t.left.push(c2.ex);c2.ex=t.left.shift();c2.rev=0;save();R();spin(i)}return}
+if(a=T.closest("[data-m]")){var c3=t.cards[+a.getAttribute("data-m")],s=amt(c3);clearInterval(timer);a.textContent=s;timer=setInterval(function(){s--;a.textContent=s;if(s<=0){clearInterval(timer);beep();buzz();done(c3)}},1000);return}
+if(a=T.closest("[data-w]")){addW(+a.getAttribute("data-w"));return}
+if(a=T.closest("[data-p]")){var p=t.pen[+a.getAttribute("data-p")];p.d=p.d?0:1;if(p.d)logAct("habit","Completed penalty task: "+p.n);fin();save();R();return}
+if(a=T.closest("[data-h]")){var k=a.getAttribute("data-h");t.h[k]=t.h[k]?0:1;if(t.h[k])logAct("habit","Completed habit: "+HAB[k]);fin();save();R();return}
+if(a=T.closest("[data-f]")){openQ(+a.getAttribute("data-f"));return}
+if(a=T.closest("[data-x]")){var removed=S.food[td()].splice(+a.getAttribute("data-x"),1)[0];if(removed)logAct("food","Removed food entry: "+removed[0]);save();R();return}
+if(a=T.closest("[data-b]")){var q=a.getAttribute("data-b");
+if(q==="pass"){if(S.coins>=40){S.coins-=40;S.passes++;S.flash="Bought a Junk Pass."}else S.flash="Not enough gold."}
+if(q==="shield"){if(S.coins>=30){S.coins-=30;S.shield++;S.flash="Bought a Streak Shield."}else S.flash="Not enough gold."}
+if(q==="box"){if(S.coins>=10){S.coins-=10;var r=Math.random();if(r<.55)S.flash="Loot Box: empty. Better luck next time.";else if(r<.85){S.coins+=15;S.flash="Loot Box: +15 gold!"}else if(r<.95){S.passes++;S.flash="Loot Box: JUNK PASS!"}else{S.shield++;S.flash="Loot Box: STREAK SHIELD!"}}else S.flash="Not enough gold."}
+save();R();return}
+if(T.id==="bx"){var js=JSON.stringify(S);try{navigator.clipboard.writeText(js).then(function(){alert("Backup copied. Paste it in a note or WhatsApp to yourself.")},function(){prompt("Copy this backup:",js)})}catch(x){prompt("Copy this backup:",js)}return}
+if(T.id==="bi"){var tx=prompt("Paste your backup here:");if(tx){try{S=Object.assign(init(),JSON.parse(tx));save();R();alert("Restored.")}catch(x){alert("That backup is not valid.")}}return}
+if(T.id==="fa"){var n=document.getElementById("fn").value||"Food",kc=parseInt(document.getElementById("fk").value);if(kc>0){(S.food[td()]=S.food[td()]||[]).push([n,kc,0]);save();R()}return}
+if(T.id==="gs"){var g=parseInt(document.getElementById("gl").value);if(g>800){S.goal=g;save();R()}return}
+if(T.id==="bs"){var bt=parseInt(document.getElementById("bt").value);if(bt>=100&&bt<=3000){S.bottle=bt;save();R()}return}
+if(T.id==="sb"){st.on?stopSteps():startSteps();return}
+if(T.id==="sm"){addStep(100);R();return}
+if(T.id==="sv"){var kg=parseFloat(document.getElementById("kg").value),wc=parseFloat(document.getElementById("wc").value);if(kg||wc){S.w.push({d:td(),kg:kg||0,wc:wc||0});logAct("body","Recorded body measurements"+(kg?" · "+kg+" kg":"")+(wc?" · "+wc+" cm":""));save();R()}}});
+document.getElementById("app").addEventListener("input",function(e){if(e.target.id==="foodSearch"){foodQuery=e.target.value.toLowerCase().trim();var groups=document.querySelectorAll(".food-group");groups.forEach(function(group){var visible=false;group.querySelectorAll("[data-food-name]").forEach(function(item){var match=item.getAttribute("data-food-name").indexOf(foodQuery)!==-1;item.hidden=!match;if(match)visible=true});group.hidden=!visible;if(foodQuery&&visible)group.open=true})}});
+document.getElementById("app").addEventListener("change",function(e){if(e.target.id==="ev"){S.every=+e.target.value;save()}if(e.target.id==="th"){S.theme=e.target.value;save();R()}});
+document.addEventListener("visibilitychange",function(){if(!document.hidden){R();nag()}});
+// ---- QUANTITY POPUP: calories count only after "Add to log"
+function dq(n){return/^Roti/.test(n)?6:/^Bhakhri/.test(n)?4:/^Paratha/.test(n)?5:/^Appe/.test(n)?15:/^Mini uttapa/.test(n)?20:/^Pasta/.test(n)?3:/^Rs 10/.test(n)?2:/^Bajri/.test(n)?2:1}
+var qs={i:0,q:1,s:1};
+function qtot(){var f=FD[qs.i];document.getElementById("qt2").textContent=Math.round(f[1]*qs.q)+" kcal | "+Math.round(f[2]*qs.q)+" g protein"}
+function updQ(){document.getElementById("qv").value=qs.q;qtot();var ops=qs.s<1?[.5,1,1.5,2,3,4]:[1,2,3,4,5,6,8,10,15,20,25];
+document.getElementById("qc").innerHTML=ops.map(function(o){return'<button class="chip'+(o===qs.q?" sel":"")+'" data-qv="'+o+'">'+o+"</button>"}).join("")}
+function openQ(i){var f=FD[i];qs.i=i;qs.s=/plate|vati|serving|glass|spoon/i.test(f[0])?.5:1;qs.q=dq(f[0]);
+document.getElementById("qn").textContent=f[0];document.getElementById("qk").textContent=f[1]+" kcal each"+(f[3]?" | JUNK: penalty task unless you have a Junk Pass":"");updQ();document.getElementById("qm").className="show"}
+function addFood(i,q){var f=FD[i],t=S.today;(S.food[td()]=S.food[td()]||[]).push([q===1?f[0]:f[0]+" x"+q,Math.round(f[1]*q),Math.round(f[2]*q)]);logAct("food","Logged "+(q===1?f[0]:f[0]+" x"+q)+" · "+Math.round(f[1]*q)+" kcal");
+if(f[3]){if(S.passes>0){S.passes--;S.flash="[SYSTEM] Junk Pass used. Enjoy it. No penalty."}else{t.pen.push({n:"20 jumping jacks (junk: "+f[0]+")",d:0});S.flash="[SYSTEM] Junk food without a pass. Penalty task added: 20 jumping jacks."}}save();R()}
+document.getElementById("qm").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+if(b.id==="qd")qs.q=Math.max(qs.s,qs.q-qs.s);else if(b.id==="qu")qs.q+=qs.s;else if(b.hasAttribute("data-qv"))qs.q=+b.getAttribute("data-qv");
+else if(b.id==="qx"){document.getElementById("qm").className="";return}
+else if(b.id==="qa"){var v=parseFloat(document.getElementById("qv").value);if(v>0)qs.q=v;document.getElementById("qm").className="";addFood(qs.i,qs.q);return}
+updQ()});
+document.getElementById("qv").addEventListener("input",function(e){var v=parseFloat(e.target.value);if(v>0){qs.q=v;qtot()}});
+try{if("serviceWorker"in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js")}catch(e){}
+R();setTimeout(nag,1500);
+</script></body></html>
