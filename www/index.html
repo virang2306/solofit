@@ -150,11 +150,15 @@ input,select{border-color:var(--ln);background:var(--deep);color:var(--tx)}
 #nag.arise h2{font-size:40px;letter-spacing:.3em;color:var(--acc2);text-shadow:0 0 18px var(--acc),0 0 42px var(--acc);animation:ar 1.6s ease-out}
 @keyframes ar{from{opacity:0;transform:scale(1.6)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#nag.arise h2{animation:none}}
+#fp{position:fixed;inset:0;background:rgba(0,2,8,.97);display:none;z-index:8;overflow:auto;padding:0 12px 28px;-webkit-overflow-scrolling:touch}#fp.show{display:block}
+.pkh{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:12px 0;background:rgba(0,2,8,.98);font-size:18px;font-weight:700;color:var(--acc2)}
+.pkg{margin-bottom:8px}.pk{display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid rgba(var(--rgb),.25)}.pk input{flex:none;width:22px;height:22px;padding:0;accent-color:var(--acc)}.pk span{flex:1}.pk em{font-style:normal;color:var(--gd)}.pk b{color:var(--rd)}.pk[hidden]{display:none}
 </style></head><body>
 <main><div id="app"></div></main>
 <nav id="nv"></nav>
 <div id="nag"><div class="win"><div class="wt">[ SYSTEM ]</div><h2 id="nt"></h2><p id="nm"></p><button id="nb">Accept</button></div></div>
 <div id="qm"><div class="win"><div class="wt">[ ADD FOOD ]</div><h2 id="qn"></h2><div class="mu sm" id="qk"></div><div class="stp"><button class="bt" id="qd">-</button><input id="qv" type="number" inputmode="decimal" step="0.5"><button class="bt" id="qu">+</button></div><div class="chips" id="qc"></div><div id="qt2"></div><div class="fl"><button class="bt" id="qx">Cancel</button><button class="bt g" id="qa">Add to log</button></div></div></div>
+<div id="fp"><div id="fpb"></div></div>
 <script>
 var KEY="fitlock_v1";
 // id, name, unit, easy, hard, kcal per unit
@@ -188,8 +192,243 @@ var HAB=["💧 Drink 3 litres of water (use the tracker)","🧘 Stretch for 5 mi
 var HF=[["Roti (wheat, small, thin)",70,2.5],["Bajri rotla (1 piece)",140,4],["Bhakhri",150,4],["Paratha (small)",140,3],["Thepla",100,3],["Khakhra",50,2],["Rice (small serving)",130,2.5],["Khichdi (small serving)",170,5],["Tuver dal (4-5 spoons)",70,4],["Moong dal (1 vati)",110,7],["Urad dal (1 vati)",140,8],["Dal fry (1 vati)",190,9],["Cabbage sabzi (1 vati)",90,2],["Cauliflower sabzi (1 vati)",100,3],["Bhindi sabzi (1 vati)",130,2],["Tomato sabzi (1 vati)",90,1],["Potato sabzi (1 vati)",160,3],["Tindora sabzi (1 vati)",100,2],["Chori sabzi (1 vati)",150,7],["Ringan sabzi (1 vati)",120,2],["Ringan bharta (1 vati)",140,2],["Gavar sabzi (1 vati)",110,4],["Dudhi sabzi (1 vati)",80,2],["Turiya sabzi (1 vati)",80,2],["Mixed veg (1 vati)",110,3],["Paneer curry (1 vati)",250,10],["Rajma (1 vati)",160,8],["Chana (1 vati)",170,9],["Sprouts (1 vati)",120,8],["Soya chunks (1 vati)",170,20],["Curd (1 vati)",90,5],["Buttermilk (glass)",40,2],["Milk (glass)",150,8],["Tea with sugar",70,1],["Cheese cube (Rs 20 size)",80,5],["Fudina chutney (1 spoon)",10,0],["Pulav (1 plate)",330,6],["Appe / appam (1 small piece)",40,1],["Mini uttapa (palm size, 1 piece)",45,1],["Poha (plate)",250,5],["Upma (plate)",220,5],["Idli",40,1],["Dosa",130,3],["Dhokla (2 pcs)",120,4],["Handvo (slice)",160,5],["Banana",100,1],["Apple",80,0],["Peanuts 30g",170,7]];
 var JF=[["Pasta (100 g dry, with sauce)",430,12],["Maggi Rs 15 pack (70 g)",310,7],["Maggi Rs 30 pack (140 g)",620,14],["Rs 10 snack packet (chips/kurkure)",145,2],["Chorafali (50 g)",260,5],["Dabeli",250,6],["Vada pav",290,7],["Burger (aloo tikki)",330,8],["Pizza slice (medium, veg)",250,10],["Pizza (half of a medium)",750,30],["Ice cream (1 scoop)",140,2],["Veg noodles (plate, small-medium)",400,9],["Veg manchurian (plate, small-medium)",330,7],["Sweet (1 piece)",150,2],["Ladoo (1)",180,3],["Kaju katli (1)",55,1],["Mohanthal (1)",150,3],["Ghughra (1)",180,3],["Gulab jamun (1)",150,2],["Peda (1)",90,2],["Basundi (1 vati)",250,7],["Samosa",260,4],["Kachori",200,4],["Pakora (plate)",300,6],["Pav bhaji (plate)",400,10],["Pani puri (6 pcs)",200,3],["French fries",365,4],["Veg momos (6 pcs)",250,7],["Fafda-jalebi",400,6],["Chocolate bar",230,3],["Cold drink (300 ml)",130,0]];
 var FD=HF.map(function(x){return x.concat(0)}).concat(JF.map(function(x){return x.concat(1)}));
-var VEG_GROUPS=["Roti, grains & rice","Dal, beans & protein","Sabzi & vegetables","Dairy & drinks","Breakfast & snacks","Fruit & extras"];
-function foodGroup(name){
+var NFS={6:`Rotli with ghee (1)|110|3
+Puri (1)|100|2
+Makai no rotlo (1)|130|3
+Juvar no rotlo (1)|120|3
+Dhebra (1)|100|3
+Bajri rotlo with ghee (1)|190|4
+Khichu (1 vati)|190|4
+Vaghareli khichdi (1 plate)|250|7
+Dal dhokli (1 plate)|300|10
+Vaghareli bhaat (1 plate)|280|5
+Kadhi (1 vati)|120|4
+Sev tameta nu shaak (1 vati)|200|4
+Undhiyu (1 vati)|230|6
+Methi muthiya nu shaak (1 vati)|180|5
+Ringan bataka shaak (1 vati)|150|3
+Usal (1 vati)|180|9
+Kathol (1 vati)|160|8
+Lasaniya bataka (1 vati)|170|3
+Mag nu shaak (1 vati)|140|8
+Valor papdi nu shaak (1 vati)|150|6
+Paneer bhurji (1 vati)|280|14
+Karela nu shaak (1 vati)|90|2
+Gathiya nu shaak (1 vati)|250|6
+Khaman (4 pcs)|160|6
+Khandvi (6 rolls)|150|5
+Muthiya, steamed (2 pcs)|110|4
+Patra, steamed (2 pcs)|110|3
+Methi na gota (4 pcs)|220|5|J
+Fafda (50 g)|250|5|J
+Gathiya (30 g)|150|4|J
+Sev (30 g)|160|4|J
+Bhakarwadi (3 pcs)|150|2|J
+Chakri (3 pcs)|140|2|J
+Chevdo (30 g)|135|3|J
+Locho (1 plate)|260|8
+Sev khamani (1 plate)|220|7
+Sabudana khichdi (1 plate)|330|4
+Sabudana vada (2 pcs)|300|3|J
+Bhel (1 plate)|280|6|J
+Sev puri (1 plate)|320|6|J
+Ragda pattice (1 plate)|350|9|J
+Bataka vada (1)|150|3|J
+Bread butter (2 slices)|200|5
+Cheese sandwich|300|11|J
+Pudla (1)|120|5
+Moong dal cheela (1)|100|6
+Oats with milk (1 bowl)|200|8
+Dalia (1 bowl)|180|6
+Boiled corn (1 bowl)|130|4
+Roasted makhana (1 bowl)|100|3
+Roasted chana (30 g)|110|6
+Murmura (1 bowl)|60|1
+Paneer tikka (6 pcs)|300|18
+Shrikhand (1 vati)|220|6|J
+Amrakhand (1 vati)|230|6|J
+Sukhdi (1 piece)|120|2|J
+Magas (1 piece)|150|3|J
+Churma ladoo (1)|220|4|J
+Sheero (1 vati)|280|4|J
+Lapsi (1 vati)|300|5|J
+Doodhpak or kheer (1 vati)|250|7|J
+Puran poli (1)|250|5|J
+Jalebi (2 pcs)|200|1|J
+Rasgulla (1)|120|3|J
+Rasmalai (1)|180|5|J
+Surti ghari (1 piece)|350|6|J
+Chikki (1 piece)|100|3|J
+Kulfi (1)|200|4|J
+Gajar halwa (1 vati)|300|5|J
+Aamras (1 vati)|200|2|J
+Sweet lassi (1 glass)|250|7|J
+Sugarcane juice (1 glass)|160|0|J
+Nimbu pani (1 glass)|80|0
+Coconut water (1 glass)|45|1
+Badam milk (1 glass)|250|9|J
+Coffee with milk and sugar|80|2
+Tea without sugar|35|1
+Mango shake (1 glass)|280|7|J
+Mango (1 medium)|200|2
+Papaya (1 bowl)|60|1
+Guava (1)|70|3
+Orange (1)|60|1
+Grapes (1 bowl)|100|1
+Watermelon (2 slices)|60|1
+Almonds (5)|40|1.5
+Cashew (5)|45|1.5
+Dates (2)|50|0.5
+Ghee (1 tsp)|40|0
+Butter (1 tsp)|35|0
+Jaggery or gur (10 g)|35|0
+Sugar (1 tsp)|20|0
+Papad, roasted (1)|35|2
+Papad, fried (1)|70|2
+Pickle or chhundo (1 spoon)|30|0
+Gujarati thali, restaurant (full)|1100|25|J`,7:`Masala dosa (1)|250|5
+Rava dosa (1)|180|4
+Set dosa (2 pcs)|200|5
+Ghee roast dosa (1)|280|5
+Paper dosa (1)|200|4
+Ragi dosa (1)|110|3
+Pesarattu (1)|130|6
+Neer dosa (2 pcs)|120|2
+Cheese dosa (1)|320|10|J
+Rava idli (1)|70|2
+Podi idli (4 pcs)|220|6
+Medu vada (1)|150|5|J
+Masala vada (2 pcs)|180|6|J
+Bonda, aloo (1)|150|3|J
+Sambar (1 vati)|130|6
+Rasam (1 vati)|50|2
+Coconut chutney (2 spoons)|60|1
+Tomato chutney (2 spoons)|35|1
+Uttapam, plain (1 large)|200|5
+Uttapam, onion (1 large)|220|6
+Pongal (1 plate)|300|8
+Vermicelli upma (1 plate)|250|5
+Idiyappam (3 pcs)|190|4
+Appam (1 large)|120|2
+Paniyaram (4 pcs)|200|5
+Puttu with kadala curry (1 plate)|350|10
+Akki roti (1)|150|3
+Ragi mudde (1 ball)|180|5
+Curd rice (1 plate)|280|7
+Lemon rice (1 plate)|300|5
+Tamarind rice (1 plate)|320|5
+Tomato rice (1 plate)|300|5
+Coconut rice (1 plate)|330|5
+Bisi bele bath (1 plate)|350|10
+Sambar rice (1 plate)|330|9
+Rasam rice (1 plate)|270|6
+Veg biryani (1 plate)|400|9
+Veg kurma (1 vati)|180|5
+Avial (1 vati)|150|3
+Poriyal, beans or cabbage (1 vati)|90|3
+Thoran (1 vati)|100|3
+Kootu (1 vati)|130|6
+Rava kesari (1 vati)|280|3|J
+Payasam (1 vati)|250|5|J
+Mysore pak (1 piece)|150|2|J
+Banana chips (30 g)|160|1|J
+Murukku (30 g)|150|3|J
+Filter coffee with sugar (1 cup)|90|3`,8:`Baati with ghee (1)|200|5
+Dal for baati (1 vati)|180|9
+Churma (1 vati)|350|6|J
+Dal baati churma (1 plate)|900|20|J
+Gatte ki sabzi (1 vati)|250|8
+Ker sangri (1 vati)|180|4
+Bajre ki roti with ghee (1)|190|4
+Missi roti (1)|150|5
+Makki ki roti (1)|130|3
+Pyaaz ka paratha (1)|200|5
+Kadhi pakora (1 vati)|230|6
+Rajasthani kadhi (1 vati)|130|4
+Papad ki sabzi (1 vati)|140|4
+Mangodi sabzi (1 vati)|160|8
+Aloo pyaaz sabzi (1 vati)|150|3
+Panchmel dal (1 vati)|180|9
+Lasun ki chutney (1 spoon)|40|0
+Bajre ka khichda (1 plate)|280|8
+Pyaaz kachori (1)|250|4|J
+Mawa kachori (1)|300|5|J
+Mirchi vada (1)|200|4|J
+Dal pakwan (1 plate)|450|12|J
+Bikaneri bhujia (30 g)|170|4|J
+Rabdi (1 vati)|280|7|J
+Malpua (1)|220|3|J
+Ghevar (1 piece)|300|3|J
+Besan chakki (1 piece)|150|3|J
+Balushahi (1)|230|3|J
+Moong dal halwa (1 vati)|350|7|J`,9:`Veg cheese burger (1)|380|12|J
+Veg grilled sandwich (1)|300|9|J
+Bombay masala sandwich (1)|280|8|J
+Cheese burst pizza slice (1)|330|13|J
+Pizza (whole medium veg)|1500|55|J
+Garlic bread (2 pcs)|240|6|J
+Veg puff (1)|240|4|J
+Veg patties (1)|200|4|J
+Aloo tikki (1 piece)|130|2|J
+Misal pav (1 plate)|450|14|J
+Sev usal (1 plate)|380|11|J
+Bread pakora (1)|250|6|J
+Dal kachori (1)|200|5|J
+Dahi puri (1 plate)|280|6|J
+Papdi chaat (1 plate)|300|7|J
+Aloo tikki chaat (1 plate)|320|7|J
+Samosa chaat (1 plate)|420|8|J
+Veg frankie or roll (1)|330|9|J
+Paneer wrap (1)|420|16|J
+Veg spring roll (2 pcs)|260|5|J
+Veg momos fried (6 pcs)|350|7|J
+Schezwan noodles (1 plate)|480|10|J
+Veg fried rice (1 plate)|420|9|J
+Schezwan fried rice (1 plate)|470|9|J
+Paneer chilli dry (1 plate)|380|16|J
+Gobi manchurian dry (1 plate)|330|6|J
+Chilli potato (1 plate)|350|4|J
+Chinese bhel (1 plate)|380|6|J
+Nachos with cheese (1 plate)|450|10|J
+Cheese maggi (1 plate)|420|11|J
+White sauce pasta (1 plate)|450|12|J
+Red sauce pasta (1 plate)|400|11|J
+French fries large|500|6|J
+Ice cream cone (1)|200|3|J
+Ice cream cup (1 medium)|220|4|J`,10:`Wafers or chips Rs 5 pack|80|1|J
+Balaji wafers Rs 10 pack|160|2|J
+Rs 20 chips or kurkure pack|300|4|J
+Cheese balls or puffs Rs 10 pack|150|2|J
+Namkeen mixture Rs 10 pack|150|3|J
+Bhujia sev Rs 10 pack|160|4|J
+Nachos chips Rs 20 pack|290|4|J
+Popcorn Rs 10 pack|120|2|J
+Parle-G biscuits Rs 5 pack|120|2|J
+Cream biscuits Rs 10 pack|150|2|J
+Good day or butter biscuits (4 pcs)|140|2|J
+Rs 1 chocolate or candy (1 piece)|25|0|J
+Rs 2 chocolate or candy (1 piece)|35|0|J
+Rs 5 chocolate (1 piece)|70|1|J
+Rs 10 chocolate (1 piece)|130|2|J
+Mentos (1 piece)|14|0|J
+Mentos Rs 10 roll (8 pieces)|110|0|J
+Toffee or eclairs (1 piece)|30|0|J
+Lollipop (1)|40|0|J`,11:`Aam panna (1 glass)|100|0
+Rooh Afza sharbat (1 glass)|110|0|J
+Lemon soda sweet (1 glass)|90|0|J
+Cold drink 250 ml bottle|105|0|J
+Cold drink 600 ml bottle|260|0|J
+Cold drink 750 ml bottle|320|0|J
+Maaza or Frooti (200 ml)|110|0|J
+Packaged juice (200 ml)|100|0|J
+Iced tea (1 glass)|100|0|J
+Energy drink (250 ml)|110|0|J
+Cold coffee (1 glass)|220|6|J
+Milkshake (1 glass)|300|8|J`};
+Object.keys(NFS).forEach(function(g){NFS[g].split("\n").forEach(function(l){var a=l.split("|");if(a.length<3)return;FD.push([a[0].trim().replace(/,/g,""),+a[1],+a[2],a[3]==="J"?1:0,+g])})});
+var CUIS={};FD.forEach(function(x){if(x.length>4)CUIS[x[0]]=x[4]});
+var VEG_GROUPS=["Roti, grains & rice","Dal, beans & protein","Sabzi & vegetables","Dairy & drinks","Breakfast & snacks","Fruit & extras","Gujarati foods","South Indian foods","Rajasthani foods","Fast food and street food","Packets, chocolates and candies","Cold drinks and other drinks"];
+function foodGroup(name){if(CUIS[name]!==undefined)return CUIS[name];
 if(/^(Roti|Bajri rotla|Bhakhri|Paratha|Thepla|Khakhra|Rice|Khichdi|Pulav)/i.test(name))return 0;
 if(/^(Tuver dal|Moong dal|Urad dal|Dal fry|Rajma|Chana|Sprouts|Soya chunks)/i.test(name))return 1;
 if(/sabzi|Ringan bharta|Mixed veg|Paneer curry/i.test(name))return 2;
@@ -242,6 +481,9 @@ var f=w[0],l=w[w.length-1],wk=Math.max(0,(new Date(td().replace(/-/g,"/"))-new D
 return'<div class="pan"><h3>[ GOAL: 70 KG ]</h3><div class="stat-row"><span class="mu">START</span><b>'+f.kg+' kg</b></div><div class="stat-row"><span class="mu">NOW</span><b>'+l.kg+' kg</b></div><div class="stat-row"><span class="mu">LEFT TO LOSE</span><b>'+Math.max(0,l.kg-70).toFixed(1)+' kg</b></div><div class="stat-row"><span class="mu">WEEKS PASSED</span><b>'+wk.toFixed(1)+' of 26</b></div><div class="stat-row"><span class="mu">PACE</span><b>'+(wk<1?"Track for 1 week first":(df<=.3?"ON TRACK":"BEHIND by "+df.toFixed(1)+" kg"))+'</b></div>'+(rate>.1&&l.kg>70?'<div class="mu sm" style="margin-top:6px">At your pace ('+rate.toFixed(2)+' kg per week) you reach 70 kg in about '+Math.ceil((l.kg-70)/rate)+' weeks.</div>':"")+'<div class="mu sm" style="margin-top:6px">Weigh yourself once a week, same day, same time, in the morning.</div></div>'}
 function deck(){var all=P.map(function(p){return p[0]}),adv=shuf(ADV),bas=shuf(all.filter(function(x){return ADV.indexOf(x)<0})),d=S.diff||0;
 if(d===2)return adv.concat(bas);if(d===1)return shuf([adv[0],adv[1],adv[2],bas[0],bas[1],bas[2]]).concat(shuf(adv.slice(3).concat(bas.slice(3))));return bas.concat(adv)}
+function junkGroups(){var jg={};FD.forEach(function(x,i){if(x[3]===1&&vis(x)){var k=x.length>4?x[4]:0;(jg[k]=jg[k]||[]).push(i)}});
+var ks=Object.keys(jg).sort(function(a,b){return a-b});if(!ks.length)return'<div class="mu sm">No junk foods selected.</div>';
+return ks.map(function(k){return'<details class="food-group" data-food-group="j'+k+'"><summary>'+(+k===0?"Junk foods already in your app":VEG_GROUPS[k])+" ("+jg[k].length+')</summary><div class="chips">'+jg[k].map(function(i){return'<button class="chip j" data-f="'+i+'" data-food-name="'+esc(FD[i][0].toLowerCase())+'">'+esc(FD[i][0])+" <span>"+FD[i][1]+"</span></button>"}).join("")+"</div></details>"}).join("")}
 function diffLvl(){var b=Math.min(S.lvl,6),d=S.diff||0;return d===2?6:d===1?Math.max(b,3):b}
 function hdr(){var L=lvl(),a=25*(L-1)*(L-1),b=25*L*L,rk="EDCBAS".charAt(Math.min(5,Math.floor((L-1)/4))),t=S.today;
 return'<div class="pan"><div class="pr"><div><div class="mu sm">OVERLORD</div><b>Demon Lord</b></div><div class="rk mu">Rank <b>'+rk+'</b></div><div class="lv">Lv.'+L+'</div><div class="gd">🪙 '+S.coins+'</div></div><div class="bar"><i style="width:'+Math.round((S.exp-a)/(b-a)*100)+'%"></i></div><div class="mu sm">EXP '+(S.exp-a)+" / "+(b-a)+' | Reign '+S.streak+' days</div><div class="tmr" id="tm">'+(t.complete?"Quest cleared. Deadline 12:00 AM":left())+"</div></div>"}
@@ -271,9 +513,9 @@ t.pen.map(function(p,i){return'<div class="row'+(p.d?" on":"")+'" data-p="'+i+'"
 h+='<div class="pan st '+(t.complete?"good":"fail")+'">'+(t.complete?"[ QUEST CLEARED ] +10 gold, +20 EXP. A new quest arrives at 12:00 AM.":"[ QUEST ACTIVE ] "+pend()+" tasks left. Fail to clear them before 12:00 AM and the penalty triggers.")+"</div>"}
 if(tab==="f"){var e2=eaten(),b=burn(),rem=S.goal-e2[0]+b,fl=S.food[td()]||[],fm=S.flash;S.flash="";
 h+=(fm?'<div class="pan fail">'+fm+"</div>":"")+'<div class="pan"><h3>[ CALORIES ]</h3><div class="big">'+Math.abs(rem)+'</div><div class="mu c">'+(rem>=0?"kcal left to eat today":"kcal over your limit")+'</div><div class="bar" style="margin:10px 0"><i style="width:'+Math.min(100,Math.round(e2[0]/Math.max(1,S.goal+b)*100))+'%"></i></div><div class="mu sm">Eaten '+e2[0]+" | Burned (exercise + steps) about "+b+" | Protein "+e2[1]+" g | Limit "+S.goal+'</div><div class="fl"><input id="gl" type="number" inputmode="numeric" placeholder="Daily limit (kcal)"><button class="bt" id="gs">Set</button></div><div class="mu sm" style="margin-top:6px">The starting limit of 2000 kcal is a rough guess for 85 to 90 kg. Change it if a doctor or dietitian advises differently. Calories are estimates.</div></div>';
-var groups=VEG_GROUPS.map(function(label,g){var items=FD.map(function(x,i){return{x:x,i:i}}).filter(function(o){return o.x[3]===0&&foodGroup(o.x[0])===g});
+var groups=VEG_GROUPS.map(function(label,g){var items=FD.map(function(x,i){return{x:x,i:i}}).filter(function(o){return o.x[3]===0&&vis(o.x)&&foodGroup(o.x[0])===g});if(!items.length)return"";
 return'<details class="food-group" data-food-group="'+g+'"'+(g===0?' open':"")+'><summary>'+label+' ('+items.length+')</summary><div class="chips">'+items.map(function(o){return'<button class="chip" data-f="'+o.i+'" data-food-name="'+esc(o.x[0].toLowerCase())+'">'+esc(o.x[0])+' <span>'+o.x[1]+'</span></button>'}).join("")+'</div></details>'}).join("");
-h+='<div class="pan"><h3>[ VEG FOOD ]</h3><div class="mu sm food-tip">Search or open a section. Tap a food to choose quantity and add it to your log.</div><input class="food-search" id="foodSearch" type="search" placeholder="Search vegetarian food" value="'+esc(foodQuery)+'"><div class="food-groups">'+groups+'</div></div><div class="pan"><h3>[ JUNK FOOD ]</h3><div class="mu sm" style="margin-bottom:8px">Junk Passes: '+S.passes+". Without a pass, each junk item adds a penalty task (20 jumping jacks).</div><div class=\"chips\">"+FD.map(function(x,i){return x[3]===1?'<button class="chip j" data-f="'+i+'">'+esc(x[0])+" <span>"+x[1]+"</span></button>":""}).join("")+'</div></div>';
+h+='<div class="pan"><h3>[ MY FOOD LIST ]</h3><div class="mu sm">'+FD.filter(function(x){return vis(x)}).length+' of '+FD.length+' foods selected. Open the list and just tick the foods you eat. You can tick more any time.</div><div class="fl"><button class="bt g" id="fpo" style="flex:1">Choose my foods</button></div></div>'+'<div class="pan"><h3>[ VEG FOOD ]</h3><div class="mu sm food-tip">Search or open a section. Tap a food to choose quantity and add it to your log.</div><input class="food-search" id="foodSearch" type="search" placeholder="Search all your foods" value="'+esc(foodQuery)+'"><div class="food-groups">'+groups+'</div></div><div class="pan"><h3>[ JUNK FOOD ]</h3><div class="mu sm" style="margin-bottom:8px">Junk Passes: '+S.passes+". Without a pass, each junk item adds a penalty task (20 jumping jacks).</div><div class=\"food-groups\">"+junkGroups()+'</div></div>';
 h+='<div class="pan"><h3>[ OTHER FOOD ]</h3><div class="fl"><input id="fn" placeholder="Food name"><input id="fk" type="number" inputmode="numeric" placeholder="kcal"><button class="bt" id="fa">Add</button></div></div>';
 h+='<div class="pan"><h3>[ FOOD LOG FOR TODAY ]</h3>'+(fl.length?fl.map(function(x,i){return'<div class="row" data-x="'+i+'"><span class="t">'+x[0]+'</span><span class="mu">'+x[1]+" kcal ✕</span></div>"}).join(""):'<div class="mu">Nothing added yet.</div>')+"</div>"}
 if(tab==="s"){var sc=S.steps[td()]||0;
@@ -398,6 +640,22 @@ else if(b.id==="qa"){var v=parseFloat(document.getElementById("qv").value);if(v>
 updQ()});
 document.getElementById("qv").addEventListener("input",function(e){var v=parseFloat(e.target.value);if(v>0){qs.q=v;qtot()}});
 try{if("serviceWorker"in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js")}catch(e){}
+// ---- FOOD PICKER: tick the foods you eat ----
+var PICKED={};["Rotli with ghee (1)", "Puri (1)", "Dhebra (1)", "Bajri rotlo with ghee (1)", "Khichu (1 vati)", "Dal dhokli (1 plate)", "Vaghareli bhaat (1 plate)", "Sev tameta nu shaak (1 vati)", "Undhiyu (1 vati)", "Kathol (1 vati)", "Lasaniya bataka (1 vati)", "Mag nu shaak (1 vati)", "Paneer bhurji (1 vati)", "Gathiya nu shaak (1 vati)", "Khaman (4 pcs)", "Fafda (50 g)", "Gathiya (30 g)", "Sev (30 g)", "Chakri (3 pcs)", "Chevdo (30 g)", "Bhel (1 plate)", "Sev puri (1 plate)", "Ragda pattice (1 plate)", "Bataka vada (1)", "Pudla (1)", "Paneer tikka (6 pcs)", "Shrikhand (1 vati)", "Sukhdi (1 piece)", "Magas (1 piece)", "Churma ladoo (1)", "Jalebi (2 pcs)", "Rasgulla (1)", "Rasmalai (1)", "Chikki (1 piece)", "Kulfi (1)", "Gajar halwa (1 vati)", "Aamras (1 vati)", "Sugarcane juice (1 glass)", "Nimbu pani (1 glass)", "Coffee with milk and sugar", "Mango (1 medium)", "Guava (1)", "Orange (1)", "Watermelon (2 slices)", "Ghee (1 tsp)", "Pickle or chhundo (1 spoon)", "Masala dosa (1)", "Rava dosa (1)", "Paper dosa (1)", "Cheese dosa (1)", "Rava idli (1)", "Medu vada (1)", "Uttapam plain (1 large)", "Uttapam onion (1 large)", "Appam (1 large)", "Sambar (1 vati)", "Coconut chutney (2 spoons)", "Sambar rice (1 plate)", "Veg biryani (1 plate)", "Banana chips (30 g)", "Filter coffee with sugar (1 cup)", "Dal for baati (1 vati)", "Bajre ki roti with ghee (1)", "Aloo pyaaz sabzi (1 vati)", "Lasun ki chutney (1 spoon)", "Bikaneri bhujia (30 g)", "Rabdi (1 vati)", "Ghevar (1 piece)"].forEach(function(n){PICKED[n]=1});
+function vis(x){return S.fsel&&Object.prototype.hasOwnProperty.call(S.fsel,x[0])?!!S.fsel[x[0]]:(x.length<5||x[4]>=9||!!PICKED[x[0]])}
+var PKG=["Everyday veg and junk foods already in your app","Gujarati foods","South Indian foods","Rajasthani foods","Fast food and street food","Packets, chocolates and candies","Cold drinks and other drinks"];
+function openPicker(){var h='<div class="pkh"><span>Choose your foods</span><button class="bt g" id="fpd">Done</button></div><input class="food-search" id="pkSearch" type="search" placeholder="Search all foods"><div class="mu sm" style="margin:6px 0 10px">Tick the foods you eat. Only ticked foods show in your Food tab. J = junk (penalty task unless you have a Junk Pass). Come back and tick more any time.</div>';
+PKG.forEach(function(label,g){var items=FD.map(function(x,i){return{x:x,i:i}}).filter(function(o){return(o.x.length<5?0:o.x[4]-5)===g});
+h+='<details class="food-group pkg" data-g="'+g+'"><summary>'+label+" ("+items.length+')</summary><div class="fl" style="padding:0 10px"><button class="bt o" data-pg="'+g+'" data-pm="1">Select all</button><button class="bt o" data-pg="'+g+'" data-pm="0">Clear</button></div><div style="padding:0 10px 8px">'+items.map(function(o){return'<label class="pk" data-pn="'+esc(o.x[0].toLowerCase())+'"><input type="checkbox" data-pk="'+o.i+'"'+(vis(o.x)?" checked":"")+"><span>"+esc(o.x[0])+(o.x[3]?" <b>J</b>":"")+"</span><em>"+o.x[1]+"</em></label>"}).join("")+"</div></details>"});
+document.getElementById("fpb").innerHTML=h;document.getElementById("fp").className="show"}
+document.getElementById("app").addEventListener("click",function(e){if(e.target.id==="fpo")openPicker()});
+document.getElementById("fp").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+if(b.id==="fpd"){document.getElementById("fp").className="";save();R();return}
+if(b.hasAttribute("data-pg")){var g=b.getAttribute("data-pg"),m=+b.getAttribute("data-pm");S.fsel=S.fsel||{};
+document.querySelectorAll('#fp .pkg[data-g="'+g+'"] input[data-pk]').forEach(function(cb){if(cb.closest("label").hidden)return;cb.checked=!!m;S.fsel[FD[+cb.getAttribute("data-pk")][0]]=m});save()}});
+document.getElementById("fp").addEventListener("change",function(e){var cb=e.target;if(cb.hasAttribute&&cb.hasAttribute("data-pk")){S.fsel=S.fsel||{};S.fsel[FD[+cb.getAttribute("data-pk")][0]]=cb.checked?1:0;save()}});
+document.getElementById("fp").addEventListener("input",function(e){if(e.target.id!=="pkSearch")return;var q=e.target.value.toLowerCase().trim();
+document.querySelectorAll("#fp .pkg").forEach(function(gr){var any=false;gr.querySelectorAll("label.pk").forEach(function(l){var ok=l.getAttribute("data-pn").indexOf(q)!==-1;l.hidden=!ok;if(ok)any=true});gr.hidden=!any;if(q&&any)gr.open=true})});
 // ---- REMINDERS THAT WORK WHEN THE APP IS CLOSED (Android app only) ----
 function syncReminders(){try{var LN=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.LocalNotifications;if(!LN)return;
 LN.requestPermissions().then(function(p){if(p.display!=="granted")return;
